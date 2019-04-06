@@ -1,28 +1,61 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { EditStore } from "./contexts/tuneedit-context";
+import { TunelistStore } from "./contexts/tuneselect-context.js";
+import { TunecopyStore } from "./contexts/tunecopy-context.js";
+import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
+import { AcceptUrl } from "./components/accept-url";
+import { TuneSelect } from "./components/tune-select";
+import { TuneEdit } from "./components/tune-edit";
+import { TuneCopy } from "./components/tune-copy";
 
-class App extends Component {
-  render() {
+import "./components/main.scss";
+import "font-awesome/css/font-awesome.min.css";
+import "abcjs/abcjs-midi.css";
+import "axios-progress-bar/dist/nprogress.css";
+
+import { loadProgressBar } from "axios-progress-bar";
+
+loadProgressBar();
+
+const acceptUrl = () => {
+    return <AcceptUrl />;
+};
+const tuneSelect = props => {
+    return <TuneSelect {...props} />;
+};
+const copies = props => {
+    return <TuneCopy {...props} />;
+};
+
+const tuneEdit = props => {
+    return <TuneEdit {...props} />;
+};
+
+const App = () => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" render={() => <Redirect to="/load" />} />
+                <TunelistStore>
+                    <TunecopyStore>
+                        <EditStore>
+                            <Route
+                                exact
+                                path="/collect/:index"
+                                component={tuneSelect}
+                            />
+                            <Route exact path="/load" component={acceptUrl} />
+                            <Route
+                                exact
+                                path="/copies/:index"
+                                component={copies}
+                            />
+                            <Route exact path="/edit" component={tuneEdit} />
+                        </EditStore>
+                    </TunecopyStore>
+                </TunelistStore>
+            </Switch>
+        </BrowserRouter>
     );
-  }
-}
-
+};
 export default App;

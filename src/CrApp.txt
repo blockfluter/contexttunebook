@@ -1,0 +1,57 @@
+import React, { Component } from 'react';
+import { observable, action, autorun } from 'mobx';
+import { observer } from 'mobx-react';
+
+
+import './components/main.scss'
+import 'font-awesome/css/font-awesome.min.css'
+
+import './components/main.scss';
+import { TuneEdit } from './components/tune-edit';
+/*
+interface acounter {
+  count: number;
+}
+
+let foo = 1;
+function check(foo: acounter) {
+  console.log(foo.count);  
+}
+
+check({ count: 123 });
+//check('123');
+*/
+
+
+const tickCounter = observable({count: 10000});
+setInterval(action(function tick() {
+//  console.log(tickCounter.count);
+  tickCounter.count += 1;
+}), 1000);
+
+  
+const Timer = ({ counter }) => {
+  return (
+    <div>{counter.count}</div>
+  );
+ }
+const LiveTimer = observer(Timer);
+
+autorun(() => {
+//  console.log('autorun->', tickCounter.count);  
+});
+
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <TuneEdit/>
+        <Timer counter={tickCounter} /><button onClick={() => tickCounter.count = 0 }>Click</button>
+          <LiveTimer counter={tickCounter}/>
+      </div>
+    );
+  }
+}
+
+export default App;

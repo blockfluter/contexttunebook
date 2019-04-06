@@ -1,0 +1,66 @@
+@import "./main";
+
+
+.navWrapper {
+    text-align:left;
+    user-select: none;
+    position: relative;
+    z-index: 1000;
+    background: $menubackground;
+    padding-right: 2em;
+    padding: 2px;
+    cursor: pointer;
+    nav > ul {
+        margin: 0;
+        padding: 0 0 0 1em;
+    }
+    nav > ul > li {
+        display: inline-block;
+        padding-right: 2em;
+        &.hidden {
+            display: none;
+        }
+        &.dropmenu::after {
+            border-top: 6px solid black;
+            border-right: 6px solid transparent;
+            border-left: 6px solid transparent;
+            content: "";
+            display: inline-block;
+            height: 0;
+            width: 0;
+            vertical-align: middle;
+            margin-left: 3px;
+        }
+    }
+
+    ul li ul {
+        padding: 0;
+    }
+    nav ul ul {
+        // padding: 0 10px 8px 6px;
+        margin-top: 8px;
+    }
+    nav ul ul li {
+        padding: 8px 16px 8px 16px;
+        cursor: pointer;
+    }
+    nav li {
+        list-style-type: none;
+        padding: 12px 0 8px 8px;
+        background: $menubackground;
+        // margin-right: 1em;
+        &:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    }
+
+    li > ul {
+        position: absolute;
+        display: none;
+    }
+
+    li:hover > ul {
+        display: block;
+        background: $menubackground;
+    }
+}
