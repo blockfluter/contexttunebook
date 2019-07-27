@@ -6,6 +6,8 @@ import { useLayoutHelper } from "../helpers/layoutHelper";
 import { actionCreator } from "../helpers/reducer";
 import { AbcControls } from "./abc-controls";
 import { downloadTunebook } from "../services/download-tunebook";
+import Button from "@material-ui/core/Button";
+import { TopBar } from './topbar.js'
 
 const controls = () => {
     const { state, dispatch } = useContext(TuneCopyContext);
@@ -34,12 +36,12 @@ const controls = () => {
                 </select>
             </li>
             <li>
-                <button
+                <Button variant="contained" color="primary"
                     onClick={() => {
                         downloadTunebook(state.tunes, "tunebook");
                     }}>
                     <i className="fa fa-download" /> Download
-                </button>
+                </Button>
             </li>
         </React.Fragment>
     );
@@ -47,6 +49,7 @@ const controls = () => {
 
 const TuneCopyControls = () => {
     return (
+        <TopBar>
         <ul role="navigation">
             <li>
                 <span role="button">
@@ -55,6 +58,7 @@ const TuneCopyControls = () => {
             </li>
             {controls()}
         </ul>
+        </TopBar>
     );
 };
 

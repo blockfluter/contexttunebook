@@ -1,6 +1,9 @@
 import React, { useEffect, useContext, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { TuneSelectContext, actions } from "../contexts/tuneselect-context.js";
+import { TopBar } from "./topbar";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 
 import {
     TuneCopyContext,
@@ -20,75 +23,75 @@ const controls = history => {
     const copyContext = useContext(TuneCopyContext);
     const editContext = useContext(EditContext);
 
-    return (
-        <Fragment>
-            <li>
-                <span
-                    className="fa fa-arrow-left"
-                    enabled={(state.tuneIndex > 0).toString()}
-                    onClick={() =>
-                        dispatch(actionCreator(actions.selectPrevTune))
-                    }
-                />
-            </li>
-            <li>
-                <span
-                    className="fa fa-arrow-right"
-                    enabled={(
-                        state.tuneIndex <
-                        state.titles.length - 1
-                    ).toString()}
-                    onClick={() =>
-                        dispatch(actionCreator(actions.selectNextTune))
-                    }
-                />
-            </li>
-            <li>
-                <label>Originals</label>
-            </li>
-            <li className="fill">
-                <select
-                    onChange={e =>
-                        dispatch(
-                            actionCreator(
-                                actions.selectTuneByIndex,
-                                e.target.value
-                            )
+    return (<Fragment>
+        <li>
+            <span
+                className="fa fa-arrow-left"
+                enabled={(state.tuneIndex > 0).toString()}
+                onClick={() =>
+                    dispatch(actionCreator(actions.selectPrevTune))
+                }
+            />
+        </li>
+        <li>
+            <span
+                className="fa fa-arrow-right"
+                enabled={(
+                    state.tuneIndex <
+                    state.titles.length - 1
+                ).toString()}
+                onClick={() =>
+                    dispatch(actionCreator(actions.selectNextTune))
+                }
+            />
+        </li>
+        <li>
+            <label>Originals</label>
+        </li>
+        <li className="fill">
+            <select
+                onChange={e =>
+                    dispatch(
+                        actionCreator(
+                            actions.selectTuneByIndex,
+                            e.target.value
                         )
-                    }
-                    value={state.tuneIndex}>
-                    {state.titles.map((t, i) => (
-                        <option key={i} value={i}>
-                            {t}
-                        </option>
-                    ))}
-                </select>
-            </li>
-            <li>
-                {state.canCopy && (
-                    <button
-                        onClick={() =>
-                            copyContext.dispatch(
-                                actionCreator(copyActions.addCopy, state.tune)
-                            )
-                        }>
-                        <i className="fa fa-copy" /> Copy
-                    </button>
-                )}
-            </li>
-            <li>
-                <Link to="/copies/0">Copies</Link>
-            </li>
-            <li>
-                <button
-                    onClick={() => {
-                        editContext.dispatch(actionCreator(editActions.setAbcText,state.tune));
-                        history.push("/edit");
-                    }}>
-                    Edit
-                </button>
-            </li>
-        </Fragment>
+                    )
+                }
+                value={state.tuneIndex}>
+                {state.titles.map((t, i) => (
+                    <option key={i} value={i}>
+                        {t}
+                    </option>
+                ))}
+            </select>
+        </li>
+        <li>
+            {state.canCopy && (
+                <Button variant="contained" color="primary"
+                    onClick={() =>
+                        copyContext.dispatch(
+                            actionCreator(copyActions.addCopy, state.tune)
+                        )
+                    }>
+                    <i className="fa fa-copy" /> Copy
+                    </Button>
+            )}
+        </li>
+        <li>
+            <Button variant="text"><RouterLink to="/copies/0">Copies</RouterLink></Button>
+        </li>
+        <li>
+            <Button variant="contained" color="primary"
+                onClick={() => {
+                    editContext.dispatch(actionCreator(editActions.setAbcText, state.tune));
+                    history.push("/edit");
+                }}>
+                Edit
+                </Button>
+        </li>
+    </Fragment>
+
     );
 };
 
@@ -96,14 +99,16 @@ const TuneSelectControls = ({ history }) => {
     const { state } = useContext(TuneSelectContext);
 
     return (
-        <ul role="navigation">
-            <li>
-                <span role="button">
-                    <Link to="/load">Load</Link>
-                </span>
-            </li>
-            {state.titles.length > 0 && controls(history)}
-        </ul>
+        <TopBar>
+            <ul role="navigation">
+                <li>
+                    <Button variant="text">
+                        <RouterLink to="/load">Load</RouterLink>
+                    </Button>
+                </li>
+                {state.titles.length > 0 && controls(history)}
+            </ul>
+        </TopBar>
     );
 };
 

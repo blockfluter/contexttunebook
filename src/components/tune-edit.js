@@ -7,61 +7,63 @@ import {
 } from "../contexts/tuneedit-context";
 import { useLayoutHelper } from "../helpers/layoutHelper";
 import { actionCreator } from "../helpers/reducer";
+import { TopBar } from "./topbar";
 
 export const TuneEdit = () => {
     const { state, dispatch } = useContext(EditContext);
     const { fixedElement, scrollingElement } = useLayoutHelper();
 
     return (
-        <Fragment><div className="controlbar" ref={fixedElement}>
-            <ul role='navigation'>
-                <li><Link to="/load">Load</Link></li>
-                <li className='fill'><input
-                    placeholder="Saved tune name"
-                    onChange={e => {
-                        dispatch(
-                            actionCreator(
-                                actions.setTitle,
-                                e.currentTarget.value
-                            )
-                        );
-                    }}
-                    value={state.title}
-                /></li>
-                <li><button
-                    disabled={state.title.length === 0}
-                    onClick={() => {
-                        dispatch(
-                            actionCreator(actions.saveEdit, {
-                                abcText: state.abcText,
-                                title: state.title
-                            })
-                        );
-                    }}>
-                    Save
-                </button></li>
-                <li>
-                    <label>Saved tunes</label>
-                    </li><li>
-                    <select
-                        value={state.index}
-                        onChange={e =>
+        <Fragment>
+            <TopBar>
+                <ul role='navigation'>
+                    <li><Link to="/load">Load</Link></li>
+                    <li className='fill'><input
+                        placeholder="Saved tune name"
+                        onChange={e => {
                             dispatch(
                                 actionCreator(
-                                    actions.setIndex,
+                                    actions.setTitle,
                                     e.currentTarget.value
                                 )
-                            )
-                        }>
-                        {state.list.map((t, i) => (
-                            <option key={i} value={i}>
-                                {t.title}
-                            </option>
-                        ))}
-                    </select>
-                </li>
-            </ul>
-            </div>
+                            );
+                        }}
+                        value={state.title}
+                    /></li>
+                    <li><button
+                        disabled={state.title.length === 0}
+                        onClick={() => {
+                            dispatch(
+                                actionCreator(actions.saveEdit, {
+                                    abcText: state.abcText,
+                                    title: state.title
+                                })
+                            );
+                        }}>
+                        Save
+                </button></li>
+                    <li>
+                        <label>Saved tunes</label>
+                    </li><li>
+                        <select
+                            value={state.index}
+                            onChange={e =>
+                                dispatch(
+                                    actionCreator(
+                                        actions.setIndex,
+                                        e.currentTarget.value
+                                    )
+                                )
+                            }>
+                            {state.list.map((t, i) => (
+                                <option key={i} value={i}>
+                                    {t.title}
+                                </option>
+                            ))}
+                        </select>
+                    </li>
+                </ul>
+            </TopBar>
             <div ref={scrollingElement} className="container">
                 {useMemo(
                     () => (
@@ -81,5 +83,6 @@ export const TuneEdit = () => {
                 )}
             </div>
         </Fragment>
+
     );
 };

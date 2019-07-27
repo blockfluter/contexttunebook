@@ -7,7 +7,7 @@ const initialState = {
     list: [],
     title: "",
     index: undefined,
-    readonly: "false"
+    readonly: false
 };
 
 const setAbcText = (state, tune) => {

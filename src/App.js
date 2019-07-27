@@ -17,8 +17,8 @@ import { loadProgressBar } from "axios-progress-bar";
 
 loadProgressBar();
 
-const acceptUrl = () => {
-    return <AcceptUrl />;
+const acceptUrl = props => {
+    return <AcceptUrl {...props}/>;
 };
 const tuneSelect = props => {
     return <TuneSelect {...props} />;

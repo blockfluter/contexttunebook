@@ -60,7 +60,6 @@ textarea {
 .controlbar {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     z-index: 1;
-    padding: 0.5em 0 0.5em 0;
     background: $darkerBackground;
     height: auto;
     top: 0;
@@ -73,7 +72,8 @@ textarea {
         display:block;
     }
     a {
-        margin:0 1em 0 1em;     
+        margin:0 1em 0 1em;  
+        color:#fff;   
     }
     .fa {
         margin:0 .5em 0 0;

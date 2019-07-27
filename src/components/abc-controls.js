@@ -16,7 +16,7 @@ export const AbcControls = props => {
             <div className="col1">
                 <div data-testid={props.midiId} id={props.midiId} />
                 <textarea
-                    readOnly={props.readOnly}
+                    readOnly={props.readOnly?true:false}
                     data-testid={props.textId}
                     id={props.textId}
                     value={abcText}
@@ -36,6 +36,6 @@ AbcControls.defaultProps = {
     midiId: "m1",
     warningsId: "w1",
     canvasId: "c1",
-    readOnly: 'true',
+    readOnly: true,
     publishAbcChange: () => { },
 }
