@@ -9,7 +9,7 @@
     "axios": "^0.18.0",
     "axios-progress-bar": "^1.2.0",
     "font-awesome": "^4.7.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-router-dom": "^5.0.0",
